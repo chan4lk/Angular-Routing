@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {path: 'products', pathMatch: 'full', component: ProductListComponent},
       {path: 'products/:id', component: ProductDetailComponent},
-      {path: 'products/:id/edit', component: ProductEditComponent}
+      {path: 'products/:id/edit', pathMatch: 'full', component: ProductEditComponent}
     ])
   ],
   declarations: [
