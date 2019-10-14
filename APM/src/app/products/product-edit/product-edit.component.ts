@@ -32,6 +32,18 @@ export class ProductEditComponent implements OnInit {
     });
   }
 
+  isValid(path?: string): boolean {
+    this.validate();
+    if (path) {
+      return this.dataIsValid[path];
+    }
+
+    return (
+      this.dataIsValid &&
+      Object.keys(this.dataIsValid).every(d => this.dataIsValid[d] === true)
+    );
+  }
+
   onProductRetrieved(product: Product): void {
     this.product = product;
 
@@ -62,7 +74,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   saveProduct(): void {
-    if (true === true) {
+    if (this.isValid()) {
       if (this.product.id === 0) {
         this.productService.createProduct(this.product).subscribe({
           next: () =>
@@ -109,11 +121,10 @@ export class ProductEditComponent implements OnInit {
     }
 
     // tags tab
-    if (this. product.category &&
-      this.product.category.length >= 3) {
-        this.dataIsValid['tags'] = true;
-      } else {
-        this.dataIsValid['tags'] = false;
-      }
+    if (this.product.category && this.product.category.length >= 3) {
+      this.dataIsValid['tags'] = true;
+    } else {
+      this.dataIsValid['tags'] = false;
+    }
   }
 }
