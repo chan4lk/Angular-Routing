@@ -6,24 +6,27 @@
   <div class="card-body"
        *ngIf="product">
     <div class="wizard">
-      <a [routerLink]="['info']">Basic Information</a>
-      <a [routerLink]="['tags']">Search Tags</a>
+      <a [routerLink]="['info']" routerLinkActive="active">
+        Basic Information <span [ngClass]="{'fa fa-exclamation': !isValid('info')}"></span></a>
+      <a [routerLink]="['tags']" routerLinkActive="active">
+        Search Tags <span [ngClass]="{'fa fa-exclamation': !isValid('tags')}"></span></a>
     </div>
   </div>
   <router-outlet></router-outlet>
   <div class="row mb-2">
-    <div class="col-md-4">
+    <div class="col-md-4 offset-md-2 pad-right">
       <button class="btn btn-primary mr-3"
               stye="width:80px"
+              [disabled]="!isValid()"
               type="button"
               title="Save your entered data"
               (click)="saveProduct()">Save</button>
-      <button class="btn btn-primary mr-3"
+      <button class="btn btn-secondary mr-3"
               stye="width:80px"
               type="button"
               title="Cancel your edits"
               [routerLink]="['/products']">Cancel</button>
-      <button class="btn btn-primary mr-3"
+      <button class="btn btn-danger mr-3"
               stye="width:80px"
               type="button"
               title="Delete this product"

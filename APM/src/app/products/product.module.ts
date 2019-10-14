@@ -14,29 +14,37 @@ import { ProductEditTagsComponent } from './product-edit/product-edit-tags.compo
   imports: [
     SharedModule,
     RouterModule.forChild([
-      { path: 'products', pathMatch: 'full', component: ProductListComponent },
       {
-        path: 'products/:id',
-        resolve: { product: ProductResolver },
-        component: ProductDetailComponent
-      },
-      {
-        path: 'products/:id/edit',
-        resolve: { product: ProductResolver },
-        component: ProductEditComponent,
+        path: 'products',
         children: [
           {
             path: '',
-            redirectTo: 'info',
-            pathMatch: 'full'
+            component: ProductListComponent,
           },
           {
-            path: 'info',
-            component: ProductEditInfoComponent
+            path: ':id',
+            resolve: { product: ProductResolver },
+            component: ProductDetailComponent
           },
           {
-            path: 'tags',
-            component: ProductEditTagsComponent
+            path: ':id/edit',
+            resolve: { product: ProductResolver },
+            component: ProductEditComponent,
+            children: [
+              {
+                path: '',
+                redirectTo: 'info',
+                pathMatch: 'full'
+              },
+              {
+                path: 'info',
+                component: ProductEditInfoComponent
+              },
+              {
+                path: 'tags',
+                component: ProductEditTagsComponent
+              }
+            ]
           }
         ]
       }
