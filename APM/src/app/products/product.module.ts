@@ -17,38 +17,32 @@ import { ProductEditGuard } from './product-edit/product-edit.guard';
     SharedModule,
     RouterModule.forChild([
       {
-        path: 'products',
-        canActivate: [AuthGuard],
+        path: '',
+        component: ProductListComponent
+      },
+      {
+        path: ':id',
+        resolve: { product: ProductResolver },
+        component: ProductDetailComponent
+      },
+      {
+        path: ':id/edit',
+        resolve: { product: ProductResolver },
+        component: ProductEditComponent,
+        canDeactivate: [ProductEditGuard],
         children: [
           {
             path: '',
-            component: ProductListComponent,
+            redirectTo: 'info',
+            pathMatch: 'full'
           },
           {
-            path: ':id',
-            resolve: { product: ProductResolver },
-            component: ProductDetailComponent
+            path: 'info',
+            component: ProductEditInfoComponent
           },
           {
-            path: ':id/edit',
-            resolve: { product: ProductResolver },
-            component: ProductEditComponent,
-            canDeactivate: [ProductEditGuard],
-            children: [
-              {
-                path: '',
-                redirectTo: 'info',
-                pathMatch: 'full'
-              },
-              {
-                path: 'info',
-                component: ProductEditInfoComponent
-              },
-              {
-                path: 'tags',
-                component: ProductEditTagsComponent
-              }
-            ]
+            path: 'tags',
+            component: ProductEditTagsComponent
           }
         ]
       }
